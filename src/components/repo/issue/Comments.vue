@@ -2,19 +2,17 @@
   <div>
     <div v-if="comments.length > 0">
       <h4>Comments</h4>
-      <div v-for="c in comments" :key="c.id">
-        {{ c.user && c.user.login }} - {{ c - body }}
+      <div v-for="c of comments" :key="c.id">
+        {{ c.user && c.user.login }} - {{ c.body }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { octokitMixin } from "./../../../mixins/octokitMixin";
-
+import { octokitMixin } from "../../../mixins/octokitMixin";
 export default {
   name: "IssueComments",
-  // PROPS
   props: {
     owner: {
       type: String,
@@ -29,15 +27,12 @@ export default {
       required: true,
     },
   },
-  // DATA
   data() {
     return {
       comments: [],
     };
   },
-  // MIXINS
   mixins: [octokitMixin],
-  // METHODS
   methods: {
     async getIssueComments(owner, repo, issueNumber) {
       if (
@@ -56,24 +51,23 @@ export default {
       this.comments = comments;
     },
   },
-  // WATCH
   watch: {
     owner: {
       immediate: true,
       handler(val) {
         this.getIssueComments(val, this.repo, this.issueNumber);
       },
-      repo: {
-        immediate: true,
-        handler(val) {
-          this.getIssueComments(this.owner, val, this.issueNumber);
-        },
+    },
+    repo: {
+      immediate: true,
+      handler(val) {
+        this.getIssueComments(this.owner, val, this.issueNumber);
       },
-      issueNumber: {
-        immediate: true,
-        handler(val) {
-          this.getIssueComments(this.owner, this.repo, val);
-        },
+    },
+    issueNumber: {
+      immediate: true,
+      handler(val) {
+        this.getIssueComments(this.owner, this.repo, val);
       },
     },
   },

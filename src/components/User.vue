@@ -28,6 +28,7 @@ export default {
   async mounted() {
     const octokit = this.createOctokitClient();
     const { data: userData } = await octokit.request("/user");
+    this.userData = userData;
   },
   // METHODS
   methods: {

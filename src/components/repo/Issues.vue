@@ -60,12 +60,12 @@ export default {
     owner: {
       immediate: true,
       handler(val) {
-        this.getIssueComments(val, this.repo);
+        this.getRepoIssues(val, this.repo);
       },
       repo: {
         immediate: true,
         handler(val) {
-          this.getIssueComments(this.owner, val);
+          this.getRepoIssues(this.owner, val);
         },
       },
     },
